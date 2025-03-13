@@ -14,10 +14,10 @@ class Program{
     static void loadData(){
         try{
             if(File.Exists(booksFile)){
-                booksRegister=JsonSerializer.Deserialize<Dictionary<string, Book>>(File.ReadAllText(booksFile));
+                booksRegister=JsonSerializer.Deserialize<Dictionary<string, Book>>(File.ReadAllText(booksFile))??new Dictionary<string, Book>();
             }
             if(File.Exists(userFile)){
-                userRegister=JsonSerializer.Deserialize<Dictionary<int,User>>(File.ReadAllText(userFile));
+                userRegister=JsonSerializer.Deserialize<Dictionary<int,User>>(File.ReadAllText(userFile))??new Dictionary<int, User>();
             }
         }catch(Exception ex){
             System.Console.WriteLine($"Error while Loading:{ex.Message}");
@@ -42,7 +42,7 @@ class Program{
         System.Console.WriteLine("Enter UserID:");
         int userId=Convert.ToInt32(Console.ReadLine());
         System.Console.WriteLine("Enter Name:");
-        String name=Console.ReadLine();
+        String name=Console.ReadLine()??"";
         if(userRegister.ContainsKey(userId)){
             System.Console.WriteLine("There is existing user with same UserID.");
             return;
@@ -56,7 +56,7 @@ class Program{
         System.Console.WriteLine("Enter BookID:");
         int bookId=Convert.ToInt32(Console.ReadLine());
         System.Console.WriteLine("Enter Book Name:");
-        String bookName=Console.ReadLine();
+        String bookName=Console.ReadLine()??"";
         if(booksRegister.ContainsKey(bookName)){
             return;
         }
@@ -94,7 +94,7 @@ class Program{
                         }
                     }
                     System.Console.WriteLine("Do you need to Borrow any Book's(Y/N):");
-                    bookBorrowChoice=Console.ReadLine();
+                    bookBorrowChoice=Console.ReadLine()??"";
                     if(bookBorrowChoice.ToUpper()=="Y"){
                         goto case 3; 
                     }
@@ -107,7 +107,7 @@ class Program{
                     }
                     BookBorrowName:
                         System.Console.WriteLine("Enter name of the book you like to borrow:");
-                        bookName=Console.ReadLine();
+                        bookName=Console.ReadLine()??"";
                         if(!booksRegister.ContainsKey(bookName)){
                             System.Console.WriteLine("Enter valid Name.");
                             goto BookBorrowName;
@@ -115,7 +115,7 @@ class Program{
                     book=(Book)booksRegister[bookName];
                     if(!book.IsAvailable){
                         System.Console.WriteLine("Book is not Available.Do you need some other book(Y/N).");
-                        bookBorrowChoice=Console.ReadLine();
+                        bookBorrowChoice=Console.ReadLine()??"";
                         if(bookBorrowChoice.ToUpper()=="Y"){
                             goto BookBorrowName;
                         }else{
@@ -137,7 +137,7 @@ class Program{
                     }
                     BookReturnName:
                         System.Console.WriteLine("Enter the name of book to return.");
-                        bookName=Console.ReadLine();
+                        bookName=Console.ReadLine()??"";
                         if(!booksRegister.ContainsKey(bookName)){
                             System.Console.WriteLine("Enter valid Name.");
                             goto BookReturnName;
