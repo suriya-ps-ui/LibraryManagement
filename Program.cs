@@ -36,11 +36,21 @@ class Program{
             System.Console.WriteLine($"Error while saving:{ex.Message}");
         }
     }
+    public static int intValidate(){
+        retry:
+        try{
+            return Convert.ToInt32(Console.ReadLine()); 
+        }catch(Exception ex){
+            System.Console.WriteLine("Enter integer number:"+ex.Message);
+            goto retry;
+        }
+    }
+
     //Method to Create New User.
     public static void createUser(){
         System.Console.WriteLine("Create New user account.");
         System.Console.WriteLine("Enter UserID:");
-        int userId=Convert.ToInt32(Console.ReadLine());
+        int userId=intValidate();
         System.Console.WriteLine("Enter Name:");
         String name=Console.ReadLine()??"";
         if(userRegister.ContainsKey(userId)){
@@ -54,7 +64,7 @@ class Program{
     public static void addBook(){
         System.Console.WriteLine("Add new Book.");
         System.Console.WriteLine("Enter BookID:");
-        int bookId=Convert.ToInt32(Console.ReadLine());
+        int bookId=intValidate();
         System.Console.WriteLine("Enter Book Name:");
         String bookName=Console.ReadLine()??"";
         if(booksRegister.ContainsKey(bookName)){
@@ -79,7 +89,7 @@ class Program{
             switch(choice){
                 case 1:
                     System.Console.WriteLine("To add new Book enter your UserID");
-                    userId=Convert.ToInt32(Console.ReadLine());
+                    userId=intValidate();
                     if(!userRegister.ContainsKey(userId)){
                         createUser();
                     }
@@ -130,7 +140,7 @@ class Program{
                     break;
                 case 4:
                     System.Console.WriteLine("Enter your UserID");
-                    userId=Convert.ToInt32(Console.ReadLine());
+                    userId=intValidate();
                     if(!userRegister.ContainsKey(userId)){
                         System.Console.WriteLine("There is no User with this ID.");
                         break;
